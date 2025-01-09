@@ -1,50 +1,88 @@
-# React + TypeScript + Vite
+# AI Background Remover
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern web application that uses artificial intelligence to automatically remove backgrounds from images. Built with React and TensorFlow.js, this application processes images directly in the browser, ensuring privacy and fast results.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🎯 Real-time background removal
+- 🔒 Client-side processing (no server uploads required)
+- 📱 Responsive design
+- ⚡ Fast processing using WebGL acceleration
+- 💾 One-click download of processed images
+- 🖼️ Support for common image formats (PNG, JPEG, etc.)
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Frontend Framework**: React 18 with TypeScript
+- **AI Model**: TensorFlow.js with BodyPix model
+- **Styling**: Tailwind CSS
+- **Build Tool**: Vite
+- **Language**: TypeScript
 
-- Configure the top-level `parserOptions` property like this:
+## Getting Started
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### Prerequisites
+
+- Node.js 16.x or later
+- npm 7.x or later
+
+### Installation
+
+1. Clone the repository
+
+```bash
+git clone <repository-url>
+cd ai-background-remover
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+2. Install dependencies
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```bash
+pnpm install
 ```
+
+3. Start the development server
+
+```bash
+pnpm run dev
+```
+
+4. Open your browser and navigate to `http://localhost:5173`
+
+## How It Works
+
+1. The application uses the BodyPix model from TensorFlow.js to detect people in images
+2. When an image is uploaded, it's processed entirely in the browser using WebGL acceleration
+3. The model creates a segmentation mask to identify the person in the image
+4. The background is made transparent while preserving the subject
+5. The resulting image can be downloaded as a PNG with transparent background
+
+## Performance Considerations
+
+- The AI model is loaded when the application starts
+- WebGL backend is used for optimal performance
+- Image processing happens in real-time using the device's GPU when available
+- The model is automatically cleaned up when the component unmounts
+
+## Browser Compatibility
+
+The application works best in modern browsers that support:
+
+- WebGL
+- Canvas API
+- File API
+- Blob API
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- TensorFlow.js team for the excellent BodyPix model
+- React team for the amazing framework
+- Tailwind CSS team for the utility-first CSS framework
