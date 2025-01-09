@@ -16,6 +16,7 @@ A modern web application that uses artificial intelligence to automatically remo
 - **Frontend Framework**: React 18 with TypeScript
 - **AI Model**: TensorFlow.js with BodyPix model
 - **Styling**: Tailwind CSS
+- **Icons**: Lucide React
 - **Build Tool**: Vite
 - **Language**: TypeScript
 
