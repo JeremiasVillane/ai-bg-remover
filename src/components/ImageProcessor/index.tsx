@@ -26,7 +26,7 @@ export function ImageProcessor() {
     <div className="w-full max-w-4xl mx-auto p-6">
       <div className="mb-8 text-center">
         <h1 className="text-3xl font-bold mb-2">AI Background Remover</h1>
-        <p className="text-gray-600">
+        <p className="text-gray-600 text-balance">
           Upload an image to remove its background using AI
         </p>
       </div>

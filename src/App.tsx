@@ -17,6 +17,17 @@ export default function App() {
 
       <footer className="mt-auto py-6 text-center text-gray-600">
         <p>Powered by TensorFlow.js and BodyPix</p>
+        <p className="text-sm italic border-t border-gray-300 pt-1 mt-2 w-48 self-center mx-auto">
+          Author:{" "}
+          <a
+            href="https://github.com/JeremiasVillane"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 font-medium hover:underline"
+          >
+            Jeremias Villane
+          </a>
+        </p>
       </footer>
     </div>
   );
