@@ -1,3 +1,5 @@
+![preview](/public/preview.png)
+
 # AI Background Remover
 
 A modern web application that uses artificial intelligence to automatically remove backgrounds from images. Built with React and TensorFlow.js, this application processes images directly in the browser, ensuring privacy and fast results.
