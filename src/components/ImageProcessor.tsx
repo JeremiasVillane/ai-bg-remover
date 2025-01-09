@@ -16,7 +16,9 @@ export const ImageProcessor = () => {
     const loadModel = async () => {
       try {
         setIsModelLoading(true);
+        // Initialize TensorFlow.js backend
         await tf.ready();
+        // Set backend to 'webgl' for better performance
         await tf.setBackend("webgl");
 
         const loadedModel = await bodyPix.load({
@@ -36,8 +38,10 @@ export const ImageProcessor = () => {
 
     loadModel();
 
+    // Cleanup
     return () => {
       if (model) {
+        // Dispose of the model when component unmounts
         model.dispose();
       }
     };
@@ -47,28 +51,35 @@ export const ImageProcessor = () => {
     if (!model || !canvasRef.current) return;
 
     try {
+      // Get segmentation mask
       const segmentation = await model.segmentPerson(imageElement);
 
+      // Create canvas context
       const canvas = canvasRef.current;
       canvas.width = imageElement.width;
       canvas.height = imageElement.height;
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
 
+      // Draw original image
       ctx.drawImage(imageElement, 0, 0);
 
+      // Get image data
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       const pixels = imageData.data;
 
+      // Apply mask
       for (let i = 0; i < segmentation.data.length; i++) {
         const isBackground = !segmentation.data[i];
         if (isBackground) {
-          pixels[i * 4 + 3] = 0;
+          pixels[i * 4 + 3] = 0; // Set alpha to 0 for background
         }
       }
 
+      // Put processed image back
       ctx.putImageData(imageData, 0, 0);
 
+      // Convert canvas to image
       const resultDataUrl = canvas.toDataURL("image/png");
       setResultImage(resultDataUrl);
     } catch (err) {
