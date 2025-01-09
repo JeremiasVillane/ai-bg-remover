@@ -89,3 +89,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - TensorFlow.js team for the excellent BodyPix model
 - React team for the amazing framework
 - Tailwind CSS team for the utility-first CSS framework
+
+## Contact me
+
+- [LinkedIn](https://snppr.vercel.app/2Vt7W2xMe)
