@@ -1,4 +1,5 @@
-import React, { useRef, useState, useEffect } from "react";
+import { Upload, Loader2 } from "lucide-react";
+import { useRef, useState, useEffect } from "react";
 import * as bodyPix from "@tensorflow-models/body-pix";
 import * as tf from "@tensorflow/tfjs";
 
@@ -130,6 +131,7 @@ export const ImageProcessor = () => {
 
       {isModelLoading ? (
         <div className="flex items-center justify-center gap-2 mb-8">
+          <Loader2 className="animate-spin" />
           <span>Loading AI model...</span>
         </div>
       ) : (
@@ -142,6 +144,7 @@ export const ImageProcessor = () => {
               onChange={handleImageUpload}
               disabled={isProcessing}
             />
+            <Upload className="mx-auto mb-4 text-gray-400" size={48} />
             <p className="text-gray-600">
               {isProcessing
                 ? "Processing..."
@@ -159,6 +162,7 @@ export const ImageProcessor = () => {
 
       {isProcessing && (
         <div className="flex items-center justify-center gap-2 mb-8">
+          <Loader2 className="animate-spin" />
           <span>Processing image...</span>
         </div>
       )}

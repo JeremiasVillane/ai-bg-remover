@@ -1,3 +1,4 @@
+import { Image } from "lucide-react";
 import { ImageProcessor } from "./components/ImageProcessor";
 
 export default function App() {
@@ -5,6 +6,7 @@ export default function App() {
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center gap-2">
+          <Image className="text-blue-500" />
           <span className="font-semibold text-xl">AI Background Remover</span>
         </div>
       </header>
