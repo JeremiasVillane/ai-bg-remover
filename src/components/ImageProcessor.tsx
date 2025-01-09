@@ -45,6 +45,7 @@ export const ImageProcessor = () => {
         model.dispose();
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const processImage = async (imageElement: HTMLImageElement) => {
