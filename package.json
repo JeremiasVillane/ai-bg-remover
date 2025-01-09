@@ -1,5 +1,10 @@
 {
   "name": "ai-bg-remover",
+  "description": "AI Background Remover",
+  "author": {
+    "name": "Jeremias Villane",
+    "email": "jeremias.villane@check-please.net"
+  },
   "private": true,
   "version": "0.0.0",
   "type": "module",

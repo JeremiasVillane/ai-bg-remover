@@ -32,7 +32,7 @@ A modern web application that uses artificial intelligence to automatically remo
 1. Clone the repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/JeremiasVillane/ai-bg-remover.git
 cd ai-bg-remover
 ```
 

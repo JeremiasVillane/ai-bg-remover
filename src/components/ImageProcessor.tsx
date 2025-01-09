@@ -1,124 +1,19 @@
-import { Upload, Loader2 } from "lucide-react";
-import { useRef, useState, useEffect } from "react";
-import * as bodyPix from "@tensorflow-models/body-pix";
-import * as tf from "@tensorflow/tfjs";
+import { Loader2, Upload } from "lucide-react";
+import { useBodyPixModel, useImageProcessing } from "../hooks";
 
-export const ImageProcessor = () => {
-  const [sourceImage, setSourceImage] = useState<string | null>(null);
-  const [resultImage, setResultImage] = useState<string | null>(null);
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [model, setModel] = useState<bodyPix.BodyPix | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [isModelLoading, setIsModelLoading] = useState(true);
+export function ImageProcessor() {
+  const { model, error: modelError, isModelLoading } = useBodyPixModel();
+  const {
+    sourceImage,
+    resultImage,
+    isProcessing,
+    error: processingError,
+    canvasRef,
+    handleImageUpload,
+    downloadResult,
+  } = useImageProcessing({ model });
 
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const loadModel = async () => {
-      try {
-        setIsModelLoading(true);
-        // Initialize TensorFlow.js backend
-        await tf.ready();
-        // Set backend to 'webgl' for better performance
-        await tf.setBackend("webgl");
-
-        const loadedModel = await bodyPix.load({
-          architecture: "MobileNetV1",
-          outputStride: 16,
-          multiplier: 0.75,
-          quantBytes: 2,
-        });
-        setModel(loadedModel);
-        setIsModelLoading(false);
-      } catch (err) {
-        setError("Failed to load AI model. Please try again later.");
-        setIsModelLoading(false);
-        console.error("Error loading model:", err);
-      }
-    };
-
-    loadModel();
-
-    // Cleanup
-    return () => {
-      if (model) {
-        // Dispose of the model when component unmounts
-        model.dispose();
-      }
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const processImage = async (imageElement: HTMLImageElement) => {
-    if (!model || !canvasRef.current) return;
-
-    try {
-      // Get segmentation mask
-      const segmentation = await model.segmentPerson(imageElement);
-
-      // Create canvas context
-      const canvas = canvasRef.current;
-      canvas.width = imageElement.width;
-      canvas.height = imageElement.height;
-      const ctx = canvas.getContext("2d");
-      if (!ctx) return;
-
-      // Draw original image
-      ctx.drawImage(imageElement, 0, 0);
-
-      // Get image data
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const pixels = imageData.data;
-
-      // Apply mask
-      for (let i = 0; i < segmentation.data.length; i++) {
-        const isBackground = !segmentation.data[i];
-        if (isBackground) {
-          pixels[i * 4 + 3] = 0; // Set alpha to 0 for background
-        }
-      }
-
-      // Put processed image back
-      ctx.putImageData(imageData, 0, 0);
-
-      // Convert canvas to image
-      const resultDataUrl = canvas.toDataURL("image/png");
-      setResultImage(resultDataUrl);
-    } catch (err) {
-      setError("Failed to process image. Please try again.");
-      console.error("Error processing image:", err);
-    }
-  };
-
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    setIsProcessing(true);
-    setError(null);
-
-    const reader = new FileReader();
-    reader.onload = async (e) => {
-      const dataUrl = e.target?.result as string;
-      setSourceImage(dataUrl);
-
-      const img = new Image();
-      img.onload = () => {
-        processImage(img).finally(() => setIsProcessing(false));
-      };
-      img.src = dataUrl;
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const downloadResult = () => {
-    if (!resultImage) return;
-
-    const link = document.createElement("a");
-    link.download = "removed-background.png";
-    link.href = resultImage;
-    link.click();
-  };
+  const error = modelError || processingError;
 
   return (
     <div className="w-full max-w-4xl mx-auto p-6">
@@ -200,4 +95,4 @@ export const ImageProcessor = () => {
       <canvas ref={canvasRef} className="hidden" />
     </div>
   );
-};
+}
