@@ -33,7 +33,7 @@ A modern web application that uses artificial intelligence to automatically remo
 
 ```bash
 git clone <repository-url>
-cd ai-background-remover
+cd ai-bg-remover
 ```
 
 2. Install dependencies
